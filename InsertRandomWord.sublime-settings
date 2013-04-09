@@ -1,0 +1,10 @@
+{
+    // min length of inserted word.  The dictionary used doesn't have any words
+    // shorter than two characters, so values below 2 will have no effect.
+    //If null, no lower bound is used.  
+	"min_length": 5,
+    // max length of inserted word.  The dictionary used doesn't have any words 
+    // longer than eight characters, so values above 8 will have no effect.  
+    // If null, there is no upper bound to word size
+    "max_length": null
+}
