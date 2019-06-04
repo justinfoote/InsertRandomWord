@@ -1,0 +1,3 @@
+[
+    { "keys": ["shift+super+r"], "command": "insert_random_word"}
+]
