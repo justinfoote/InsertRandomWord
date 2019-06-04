@@ -6,6 +6,8 @@ import sublime_plugin
 
 settings = sublime.load_settings("InsertRandomWord.sublime-settings")
 
+_PATH = __file__
+
 def getSetting(key, default = None):
     value = settings.get(key)
     if value is None:
@@ -14,16 +16,19 @@ def getSetting(key, default = None):
 
 
 class InsertRandomWordCommand(sublime_plugin.TextCommand):
-    _WORD_LIST_FILE_NAME = 'wordlist.txt'
-
     _MIN_LENGTH = getSetting('min_length', 0)
     _MAX_LENGTH = max(getSetting('max_length', float('inf')), _MIN_LENGTH)
 
-
-    _wordListPath = os.path.join(sublime.packages_path(), 'InsertRandomWord', 
-            _WORD_LIST_FILE_NAME)
-    _wordList = None
-
+    _wordListPath = 'Packages/InsertRandomWord/wordlist.txt'
+    
+    @property
+    def _wordList(self):
+        if not hasattr(self, '__wordList'):
+            self.__wordList = [line for line
+                    in sublime.load_resource(self._wordListPath).split()
+                    if self.isOk(line)]
+        return self.__wordList
+    
 
     def run(self, edit):
         word = self._getWord()
